@@ -22,6 +22,7 @@ class FilterJobApplicationsRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'search' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', Rule::in(array_keys(JobApplication::STATUSES))],
             'priority' => ['nullable', Rule::in(array_keys(JobApplication::PRIORITIES))],
         ];

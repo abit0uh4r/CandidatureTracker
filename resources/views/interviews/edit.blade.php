@@ -1,27 +1,23 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Modifier un entretien
-            </h2>
-            <p class="mt-1 text-sm text-gray-500">
-                {{ $jobApplication->company_name }} - {{ $jobApplication->position_title }}
-            </p>
-        </div>
-    </x-slot>
+    <x-page-header
+        title="Modifier un entretien"
+        :subtitle="$jobApplication->company_name . ' · ' . $jobApplication->position_title"
+    >
+        <x-slot name="actions">
+            <a href="{{ route('job-applications.show', $jobApplication) }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+                Retour au dossier
+            </a>
+        </x-slot>
+    </x-page-header>
 
-    <div class="py-8">
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <div class="bg-white p-6 shadow-sm sm:rounded-lg">
-                <form method="POST" action="{{ route('job-applications.interviews.update', [$jobApplication, $interview]) }}">
-                    @csrf
-                    @method('PUT')
+    <x-ui.card class="max-w-5xl">
+        <form method="POST" action="{{ route('job-applications.interviews.update', [$jobApplication, $interview]) }}">
+            @csrf
+            @method('PUT')
 
-                    @include('interviews._form', [
-                        'submitLabel' => 'Enregistrer',
-                    ])
-                </form>
-            </div>
-        </div>
-    </div>
+            @include('interviews._form', [
+                'submitLabel' => 'Enregistrer',
+            ])
+        </form>
+    </x-ui.card>
 </x-app-layout>

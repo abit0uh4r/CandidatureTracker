@@ -1,11 +1,11 @@
-<div class="grid gap-6 md:grid-cols-2">
+<div class="grid grid-cols-2 gap-6">
     <div>
-        <x-input-label for="company_name" value="Entreprise" />
+        <x-input-label for="company_name" value="Nom de l'entreprise" />
         <x-text-input
             id="company_name"
             name="company_name"
             type="text"
-            class="mt-1 block w-full"
+            class="mt-2"
             :value="old('company_name', $jobApplication->company_name ?? '')"
             required
             autofocus
@@ -14,12 +14,12 @@
     </div>
 
     <div>
-        <x-input-label for="position_title" value="Poste vise" />
+        <x-input-label for="position_title" value="Poste visé" />
         <x-text-input
             id="position_title"
             name="position_title"
             type="text"
-            class="mt-1 block w-full"
+            class="mt-2"
             :value="old('position_title', $jobApplication->position_title ?? '')"
             required
         />
@@ -32,8 +32,9 @@
             id="offer_url"
             name="offer_url"
             type="url"
-            class="mt-1 block w-full"
+            class="mt-2"
             :value="old('offer_url', $jobApplication->offer_url ?? '')"
+            placeholder="https://..."
         />
         <x-input-error class="mt-2" :messages="$errors->get('offer_url')" />
     </div>
@@ -44,7 +45,7 @@
             id="applied_at"
             name="applied_at"
             type="date"
-            class="mt-1 block w-full"
+            class="mt-2"
             :value="old('applied_at', optional($jobApplication->applied_at ?? null)->format('Y-m-d'))"
             required
         />
@@ -53,42 +54,37 @@
 
     <div>
         <x-input-label for="status" value="Statut" />
-        <select id="status" name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+        <x-select-input id="status" name="status" class="mt-2" required>
             @foreach ($statuses as $value => $label)
                 <option value="{{ $value }}" @selected(old('status', $jobApplication->status ?? 'draft') === $value)>
                     {{ $label }}
                 </option>
             @endforeach
-        </select>
+        </x-select-input>
         <x-input-error class="mt-2" :messages="$errors->get('status')" />
     </div>
 
     <div>
-        <x-input-label for="priority" value="Priorite" />
-        <select id="priority" name="priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+        <x-input-label for="priority" value="Priorité" />
+        <x-select-input id="priority" name="priority" class="mt-2" required>
             @foreach ($priorities as $value => $label)
                 <option value="{{ $value }}" @selected(old('priority', $jobApplication->priority ?? 'medium') === $value)>
                     {{ $label }}
                 </option>
             @endforeach
-        </select>
+        </x-select-input>
         <x-input-error class="mt-2" :messages="$errors->get('priority')" />
     </div>
 
-    <div class="md:col-span-2">
+    <div class="col-span-2">
         <x-input-label for="notes" value="Notes" />
-        <textarea
-            id="notes"
-            name="notes"
-            rows="6"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-        >{{ old('notes', $jobApplication->notes ?? '') }}</textarea>
+        <x-textarea-input id="notes" name="notes" rows="7" class="mt-2" placeholder="Relances, contacts, éléments importants...">{{ old('notes', $jobApplication->notes ?? '') }}</x-textarea-input>
         <x-input-error class="mt-2" :messages="$errors->get('notes')" />
     </div>
 </div>
 
-<div class="mt-6 flex items-center justify-end gap-3">
-    <a href="{{ route('job-applications.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
+<div class="mt-8 flex items-center justify-end gap-3 border-t border-slate-100 pt-6">
+    <a href="{{ $cancelUrl ?? route('job-applications.index') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
         Annuler
     </a>
 

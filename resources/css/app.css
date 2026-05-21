@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-slate-100 text-slate-900;
+    }
+}
+
+@layer components {
+    .ct-card {
+        @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+    }
+
+    .ct-field {
+        @apply block w-full rounded-xl border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-slate-400 focus:ring-slate-400;
+    }
+
+    .ct-label {
+        @apply block text-sm font-semibold text-slate-700;
+    }
+
+    .ct-help {
+        @apply mt-2 text-sm text-slate-500;
+    }
+
+    .ct-table-th {
+        @apply px-5 py-3 text-left text-xs font-semibold uppercase text-slate-500;
+    }
+
+    .ct-table-td {
+        @apply px-5 py-4 text-sm text-slate-700;
+    }
+
+    .ct-action-link {
+        @apply text-sm font-semibold text-[#0b2d5f] transition hover:text-[#061a38];
+    }
+
+    .ct-auth-pattern {
+        background-image:
+            linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+        background-size: 36px 36px;
+    }
+}

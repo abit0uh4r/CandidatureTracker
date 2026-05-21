@@ -14,12 +14,12 @@ class JobApplication extends Model
 
     public const STATUSES = [
         'draft' => 'Brouillon',
-        'applied' => 'Candidature envoyee',
+        'applied' => 'Candidature envoyée',
         'waiting' => 'En attente',
-        'interview' => 'Entretien prevu',
-        'offer' => 'Offre recue',
-        'rejected' => 'Refusee',
-        'accepted' => 'Acceptee',
+        'interview' => 'Entretien prévu',
+        'offer' => 'Offre reçue',
+        'rejected' => 'Refusée',
+        'accepted' => 'Acceptée',
     ];
 
     public const PRIORITIES = [

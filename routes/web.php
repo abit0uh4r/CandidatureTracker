@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationDocumentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\ProfileController;
@@ -10,9 +11,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('job-applications/archives', [JobApplicationController::class, 'archives'])
@@ -21,7 +22,10 @@ Route::middleware('auth')->group(function () {
         ->withTrashed()
         ->name('job-applications.restore');
 
-    Route::resource('job-applications', JobApplicationController::class);
+    Route::resource('job-applications', JobApplicationController::class)
+        ->withTrashed(['show']);
+    Route::get('documents', [ApplicationDocumentController::class, 'index'])
+        ->name('documents.index');
     Route::post('job-applications/{job_application}/documents', [ApplicationDocumentController::class, 'store'])
         ->name('job-applications.documents.store');
     Route::get('job-applications/{job_application}/documents/{document}/download', [ApplicationDocumentController::class, 'download'])

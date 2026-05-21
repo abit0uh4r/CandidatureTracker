@@ -1,137 +1,146 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Mes candidatures
-            </h2>
+    <x-page-header
+        title="Mes candidatures"
+        subtitle="Toutes vos candidatures actives, filtrables par statut, priorité ou recherche texte."
+    >
+        <x-slot name="actions">
+            <a href="{{ route('job-applications.archives') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+                Archives
+            </a>
+            <a href="{{ route('job-applications.create') }}" class="inline-flex items-center justify-center rounded-xl bg-[#0b2d5f] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#061f42]">
+                Nouvelle candidature
+            </a>
+        </x-slot>
+    </x-page-header>
 
-            <div class="flex flex-col gap-3 sm:flex-row">
-                <a href="{{ route('job-applications.archives') }}" class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50">
-                    Archives
-                </a>
+    @if (session('success'))
+        <x-alert class="mb-6">{{ session('success') }}</x-alert>
+    @endif
 
-                <a href="{{ route('job-applications.create') }}" class="inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700">
-                    Nouvelle candidature
-                </a>
+    <x-ui.card class="mb-6">
+        <form method="GET" action="{{ route('job-applications.index') }}" class="grid grid-cols-[minmax(260px,1fr)_220px_220px_auto_auto] items-end gap-4">
+            @csrf
+
+            <div>
+                <x-input-label for="search" value="Recherche" />
+                <x-text-input
+                    id="search"
+                    name="search"
+                    type="search"
+                    class="mt-2"
+                    :value="$filters['search'] ?? ''"
+                    placeholder="Entreprise ou poste"
+                />
+                <x-input-error class="mt-2" :messages="$errors->get('search')" />
             </div>
-        </div>
-    </x-slot>
 
-    <div class="py-8">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            @if (session('success'))
-                <div class="mb-6 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <div>
+                <x-input-label for="status" value="Statut" />
+                <x-select-input id="status" name="status" class="mt-2">
+                    <option value="">Tous les statuts</option>
+                    @foreach ($statuses as $value => $label)
+                        <option value="{{ $value }}" @selected(($filters['status'] ?? '') === $value)>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </x-select-input>
+                <x-input-error class="mt-2" :messages="$errors->get('status')" />
+            </div>
 
-            <form method="GET" action="{{ route('job-applications.index') }}" class="mb-6 grid gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:grid-cols-[1fr_1fr_auto] md:items-end">
-                @csrf
+            <div>
+                <x-input-label for="priority" value="Priorité" />
+                <x-select-input id="priority" name="priority" class="mt-2">
+                    <option value="">Toutes</option>
+                    @foreach ($priorities as $value => $label)
+                        <option value="{{ $value }}" @selected(($filters['priority'] ?? '') === $value)>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </x-select-input>
+                <x-input-error class="mt-2" :messages="$errors->get('priority')" />
+            </div>
 
-                <div>
-                    <x-input-label for="status" value="Statut" />
-                    <select id="status" name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="">Tous les statuts</option>
-                        @foreach ($statuses as $value => $label)
-                            <option value="{{ $value }}" @selected(($filters['status'] ?? '') === $value)>
-                                {{ $label }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
-                </div>
+            <x-primary-button>
+                Filtrer
+            </x-primary-button>
 
-                <div>
-                    <x-input-label for="priority" value="Priorite" />
-                    <select id="priority" name="priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="">Toutes les priorites</option>
-                        @foreach ($priorities as $value => $label)
-                            <option value="{{ $value }}" @selected(($filters['priority'] ?? '') === $value)>
-                                {{ $label }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error class="mt-2" :messages="$errors->get('priority')" />
-                </div>
+            <a href="{{ route('job-applications.index') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+                Réinitialiser
+            </a>
+        </form>
+    </x-ui.card>
 
-                <div class="flex gap-3">
-                    <x-primary-button>
-                        Filtrer
-                    </x-primary-button>
+    <x-ui.card class="p-0">
+        <div class="overflow-hidden rounded-2xl">
+            <table class="min-w-full divide-y divide-slate-100">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th scope="col" class="ct-table-th">Entreprise</th>
+                        <th scope="col" class="ct-table-th">Poste</th>
+                        <th scope="col" class="ct-table-th">Statut</th>
+                        <th scope="col" class="ct-table-th">Priorité</th>
+                        <th scope="col" class="ct-table-th">Date de candidature</th>
+                        <th scope="col" class="ct-table-th text-center">Entretiens</th>
+                        <th scope="col" class="ct-table-th text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 bg-white">
+                    @forelse ($jobApplications as $jobApplication)
+                        <tr class="hover:bg-slate-50">
+                            <td class="ct-table-td font-semibold text-slate-950">
+                                <a href="{{ route('job-applications.show', $jobApplication) }}" class="hover:text-[#0b2d5f]">
+                                    {{ $jobApplication->company_name }}
+                                </a>
+                            </td>
+                            <td class="ct-table-td">{{ $jobApplication->position_title }}</td>
+                            <td class="ct-table-td">
+                                <x-status-badge :status="$jobApplication->status" />
+                            </td>
+                            <td class="ct-table-td">
+                                <x-priority-badge :priority="$jobApplication->priority" />
+                            </td>
+                            <td class="ct-table-td whitespace-nowrap">{{ $jobApplication->applied_at->format('d/m/Y') }}</td>
+                            <td class="ct-table-td text-center font-semibold text-slate-900">{{ $jobApplication->interviews_count ?? 0 }}</td>
+                            <td class="ct-table-td">
+                                <div class="flex items-center justify-end gap-3">
+                                    <a href="{{ route('job-applications.show', $jobApplication) }}" class="ct-action-link">Voir</a>
+                                    <a href="{{ route('job-applications.edit', $jobApplication) }}" class="ct-action-link">Modifier</a>
 
-                    <a href="{{ route('job-applications.index') }}" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 transition hover:bg-gray-50">
-                        Reinitialiser
-                    </a>
-                </div>
-            </form>
+                                    <form method="POST" action="{{ route('job-applications.destroy', $jobApplication) }}">
+                                        @csrf
+                                        @method('DELETE')
 
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Entreprise</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Poste</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Statut</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Priorite</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Date</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100 bg-white">
-                            @forelse ($jobApplications as $jobApplication)
-                                <tr class="hover:bg-gray-50">
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-gray-900">
-                                        <a href="{{ route('job-applications.show', $jobApplication) }}" class="hover:text-indigo-700">
-                                            {{ $jobApplication->company_name }}
+                                        <button type="submit" class="text-sm font-semibold text-slate-500 transition hover:text-rose-600">
+                                            Archiver
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-6 py-10">
+                                <x-empty-state
+                                    title="Aucune candidature active"
+                                    description="Ajoutez votre première candidature pour suivre son statut, sa priorité et ses entretiens."
+                                >
+                                    <x-slot name="action">
+                                        <a href="{{ route('job-applications.create') }}" class="inline-flex items-center justify-center rounded-xl bg-[#0b2d5f] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#061f42]">
+                                            Nouvelle candidature
                                         </a>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-700">
-                                        {{ $jobApplication->position_title }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
-                                        {{ $jobApplication->statusLabel() }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
-                                        {{ $jobApplication->priorityLabel() }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
-                                        {{ $jobApplication->applied_at->format('d/m/Y') }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                        <div class="flex justify-end gap-3">
-                                            <a href="{{ route('job-applications.edit', $jobApplication) }}" class="text-indigo-700 hover:text-indigo-900">
-                                                Modifier
-                                            </a>
-
-                                            <form method="POST" action="{{ route('job-applications.destroy', $jobApplication) }}">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button type="submit" class="text-gray-600 hover:text-gray-900">
-                                                    Archiver
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="px-6 py-10 text-center text-sm text-gray-500">
-                                        Aucune candidature active.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-
-                @if ($jobApplications->hasPages())
-                    <div class="border-t border-gray-100 px-6 py-4">
-                        {{ $jobApplications->links() }}
-                    </div>
-                @endif
-            </div>
+                                    </x-slot>
+                                </x-empty-state>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-    </div>
+
+        @if ($jobApplications->hasPages())
+            <div class="border-t border-slate-100 px-6 py-4">
+                {{ $jobApplications->links() }}
+            </div>
+        @endif
+    </x-ui.card>
 </x-app-layout>
