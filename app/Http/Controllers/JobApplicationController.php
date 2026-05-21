@@ -22,6 +22,19 @@ class JobApplicationController extends Controller
         ]);
     }
 
+    public function archives(): View
+    {
+        $jobApplications = auth()->user()
+            ->jobApplications()
+            ->onlyTrashed()
+            ->latest('deleted_at')
+            ->paginate(10);
+
+        return view('job-applications.archives', [
+            'jobApplications' => $jobApplications,
+        ]);
+    }
+
     public function create(): View
     {
         $this->authorize('create', JobApplication::class);
@@ -85,5 +98,16 @@ class JobApplicationController extends Controller
         return redirect()
             ->route('job-applications.index')
             ->with('success', 'Candidature archivee avec succes.');
+    }
+
+    public function restore(JobApplication $jobApplication): RedirectResponse
+    {
+        $this->authorize('restore', $jobApplication);
+
+        $jobApplication->restore();
+
+        return redirect()
+            ->route('job-applications.archives')
+            ->with('success', 'Candidature restauree avec succes.');
     }
 }
