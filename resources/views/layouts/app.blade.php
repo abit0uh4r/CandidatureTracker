@@ -9,14 +9,14 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="min-w-[1200px] bg-slate-100 font-sans antialiased text-slate-900">
+    <body class="min-w-[1180px] bg-slate-100 font-sans antialiased text-slate-900">
         <div class="min-h-screen">
             @include('layouts.sidebar')
 
-            <div class="ml-72 min-h-screen">
+            <div class="ml-64 min-h-screen">
                 @include('layouts.topbar')
 
-                <main class="px-8 py-8">
+                <main class="px-6 py-6">
                     @isset($header)
                         {{ $header }}
                     @endisset

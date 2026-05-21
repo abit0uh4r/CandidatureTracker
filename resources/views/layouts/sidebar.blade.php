@@ -1,17 +1,17 @@
 @php
-    $iconClass = 'h-5 w-5';
+    $iconClass = 'h-4.5 w-4.5';
 @endphp
 
-<aside class="fixed inset-y-0 left-0 z-30 flex w-72 flex-col bg-[#071c3f] px-4 py-5 text-white">
+<aside class="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-[#071c3f] px-3.5 py-4 text-white">
     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-2">
-        <x-application-logo class="h-11 w-11 text-white" />
+        <x-application-logo class="h-10 w-10 text-white" />
         <div>
-            <p class="text-base font-bold">CandidatureTracker</p>
+            <p class="text-sm font-bold">CandidatureTracker</p>
             <p class="text-xs text-slate-300">Suivi d'emploi</p>
         </div>
     </a>
 
-    <nav class="mt-8 space-y-2">
+    <nav class="mt-6 space-y-1.5">
         <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             <x-slot name="icon">
                 <svg class="{{ $iconClass }}" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -68,14 +68,14 @@
         </x-sidebar-link>
     </nav>
 
-    <div class="mt-auto rounded-2xl border border-white/10 bg-white/5 p-4">
+    <div class="mt-auto rounded-xl border border-white/10 bg-white/5 p-3.5">
         <p class="text-sm font-semibold">{{ auth()->user()->name }}</p>
         <p class="mt-1 truncate text-xs text-slate-300">{{ auth()->user()->email }}</p>
 
-        <form method="POST" action="{{ route('logout') }}" class="mt-4">
+        <form method="POST" action="{{ route('logout') }}" class="mt-3">
             @csrf
 
-            <button type="submit" class="w-full rounded-xl bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
+            <button type="submit" class="w-full rounded-lg bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/15">
                 Déconnexion
             </button>
         </form>
