@@ -9,6 +9,11 @@
     <body class="min-w-[1180px] bg-slate-100 text-slate-900">
         <main class="grid min-h-screen place-items-center px-8">
             <section class="ct-card max-w-xl p-10 text-center">
+                <div class="mx-auto mb-8 flex w-max items-center gap-3">
+                    <x-application-logo class="h-11 w-11" />
+                    <span class="text-base font-bold text-slate-950">CandidatureTracker</span>
+                </div>
+
                 <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-slate-50 text-[#0b2d5f] ring-1 ring-slate-200">
                     <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M6 5h12a1 1 0 0 1 1 1v13l-3-2-3 2-3-2-3 2V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
