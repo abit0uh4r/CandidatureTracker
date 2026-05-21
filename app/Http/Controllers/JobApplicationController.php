@@ -70,6 +70,7 @@ class JobApplicationController extends Controller
         $this->authorize('view', $jobApplication);
 
         $jobApplication->load([
+            'documents' => fn ($query) => $query->latest(),
             'interviews' => fn ($query) => $query->latest('scheduled_at'),
         ]);
 
