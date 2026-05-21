@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterJobApplicationsRequest;
 use App\Http\Requests\StoreJobApplicationRequest;
 use App\Http\Requests\UpdateJobApplicationRequest;
 use App\Models\JobApplication;
@@ -10,15 +11,23 @@ use Illuminate\View\View;
 
 class JobApplicationController extends Controller
 {
-    public function index(): View
+    public function index(FilterJobApplicationsRequest $request): View
     {
+        $filters = $request->validated();
+
         $jobApplications = auth()->user()
             ->jobApplications()
+            ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
+            ->when($filters['priority'] ?? null, fn ($query, $priority) => $query->where('priority', $priority))
             ->latest('applied_at')
-            ->paginate(10);
+            ->paginate(10)
+            ->appends($filters);
 
         return view('job-applications.index', [
             'jobApplications' => $jobApplications,
+            'filters' => $filters,
+            'statuses' => JobApplication::STATUSES,
+            'priorities' => JobApplication::PRIORITIES,
         ]);
     }
 

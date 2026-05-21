@@ -25,6 +25,46 @@
                 </div>
             @endif
 
+            <form method="GET" action="{{ route('job-applications.index') }}" class="mb-6 grid gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:grid-cols-[1fr_1fr_auto] md:items-end">
+                @csrf
+
+                <div>
+                    <x-input-label for="status" value="Statut" />
+                    <select id="status" name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="">Tous les statuts</option>
+                        @foreach ($statuses as $value => $label)
+                            <option value="{{ $value }}" @selected(($filters['status'] ?? '') === $value)>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                </div>
+
+                <div>
+                    <x-input-label for="priority" value="Priorite" />
+                    <select id="priority" name="priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="">Toutes les priorites</option>
+                        @foreach ($priorities as $value => $label)
+                            <option value="{{ $value }}" @selected(($filters['priority'] ?? '') === $value)>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-input-error class="mt-2" :messages="$errors->get('priority')" />
+                </div>
+
+                <div class="flex gap-3">
+                    <x-primary-button>
+                        Filtrer
+                    </x-primary-button>
+
+                    <a href="{{ route('job-applications.index') }}" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 transition hover:bg-gray-50">
+                        Reinitialiser
+                    </a>
+                </div>
+            </form>
+
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
