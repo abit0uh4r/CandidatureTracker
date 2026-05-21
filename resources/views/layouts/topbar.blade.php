@@ -32,53 +32,6 @@
                 Nouvelle candidature
             </a>
 
-            <div class="relative" x-data="{ open: false }" @click.outside="open = false">
-                <button
-                    type="button"
-                    class="relative grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-[#0b2d5f] shadow-sm transition hover:bg-slate-50"
-                    aria-label="Notifications"
-                    title="Notifications"
-                    @click="open = ! open"
-                    :aria-expanded="open.toString()"
-                >
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M15.5 17.5h-7A2.5 2.5 0 0 1 6 15V11a6 6 0 0 1 12 0v4a2.5 2.5 0 0 1-2.5 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M10 20a2.2 2.2 0 0 0 4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                    </svg>
-                    <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
-                </button>
-
-                <div
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-150"
-                    x-transition:enter-start="translate-y-1 opacity-0"
-                    x-transition:enter-end="translate-y-0 opacity-100"
-                    x-transition:leave="transition ease-in duration-100"
-                    x-transition:leave-start="translate-y-0 opacity-100"
-                    x-transition:leave-end="translate-y-1 opacity-0"
-                    class="absolute right-0 z-30 mt-3 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl shadow-slate-200/70"
-                    style="display: none;"
-                >
-                    <div class="border-b border-slate-100 px-4 py-3">
-                        <p class="text-sm font-bold text-slate-950">Notifications</p>
-                        <p class="mt-0.5 text-xs text-slate-500">Vos rappels et alertes apparaîtront ici.</p>
-                    </div>
-
-                    <div class="px-4 py-5 text-center">
-                        <div class="mx-auto grid h-10 w-10 place-items-center rounded-full bg-slate-100 text-[#0b2d5f]">
-                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M15.5 17.5h-7A2.5 2.5 0 0 1 6 15V11a6 6 0 0 1 12 0v4a2.5 2.5 0 0 1-2.5 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                                <path d="M10 20a2.2 2.2 0 0 0 4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <p class="mt-3 text-sm font-semibold text-slate-900">Aucune notification</p>
-                        <p class="mt-1 text-xs leading-5 text-slate-500">
-                            Les rappels de relance et les entretiens proches seront affichés dans ce panneau.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             <div class="flex items-center gap-2.5 rounded-full border border-slate-200 bg-white py-1 pl-1.5 pr-3 shadow-sm">
                 <div class="grid h-8 w-8 place-items-center rounded-full bg-slate-100 text-xs font-bold text-[#0b2d5f]">
                     {{ $initials }}
