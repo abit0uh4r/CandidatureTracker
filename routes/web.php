@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::middleware('auth')->group(function () {
         ->name('job-applications.restore');
 
     Route::resource('job-applications', JobApplicationController::class);
+    Route::resource('job-applications.interviews', InterviewController::class)
+        ->except(['index', 'show']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
