@@ -73,6 +73,10 @@
                 <section class="bg-white p-6 shadow-sm sm:rounded-lg">
                     <div class="flex items-center justify-between">
                         <h3 class="text-base font-semibold text-gray-900">Entretiens</h3>
+
+                        <a href="{{ route('job-applications.interviews.create', $jobApplication) }}" class="inline-flex items-center justify-center rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-gray-700">
+                            Ajouter
+                        </a>
                     </div>
 
                     <div class="mt-5 divide-y divide-gray-100">
@@ -90,6 +94,21 @@
                                 @if ($interview->result)
                                     <p class="mt-2 whitespace-pre-line text-sm text-gray-700">{{ $interview->result }}</p>
                                 @endif
+
+                                <div class="mt-3 flex gap-3 text-sm font-medium">
+                                    <a href="{{ route('job-applications.interviews.edit', [$jobApplication, $interview]) }}" class="text-indigo-700 hover:text-indigo-900">
+                                        Modifier
+                                    </a>
+
+                                    <form method="POST" action="{{ route('job-applications.interviews.destroy', [$jobApplication, $interview]) }}">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="text-gray-600 hover:text-gray-900">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         @empty
                             <p class="py-6 text-sm text-gray-500">Aucun entretien enregistre.</p>
