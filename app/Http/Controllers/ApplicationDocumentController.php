@@ -7,10 +7,24 @@ use App\Models\ApplicationDocument;
 use App\Models\JobApplication;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApplicationDocumentController extends Controller
 {
+    public function index(): View
+    {
+        $documents = ApplicationDocument::query()
+            ->with('jobApplication')
+            ->whereHas('jobApplication', fn ($query) => $query->where('user_id', auth()->id()))
+            ->latest()
+            ->paginate(12);
+
+        return view('documents.index', [
+            'documents' => $documents,
+        ]);
+    }
+
     public function store(StoreApplicationDocumentRequest $request, JobApplication $jobApplication): RedirectResponse
     {
         $file = $request->file('document');
@@ -25,7 +39,7 @@ class ApplicationDocumentController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Document ajoute avec succes.');
+            ->with('success', 'Document ajouté avec succès.');
     }
 
     public function download(JobApplication $jobApplication, ApplicationDocument $document): StreamedResponse
@@ -46,7 +60,7 @@ class ApplicationDocumentController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Document supprime avec succes.');
+            ->with('success', 'Document supprimé avec succès.');
     }
 
     private function ensureDocumentBelongsToJobApplication(JobApplication $jobApplication, ApplicationDocument $document): void

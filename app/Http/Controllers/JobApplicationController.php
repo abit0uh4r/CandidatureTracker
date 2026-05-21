@@ -17,6 +17,13 @@ class JobApplicationController extends Controller
 
         $jobApplications = auth()->user()
             ->jobApplications()
+            ->withCount('interviews')
+            ->when($filters['search'] ?? null, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('company_name', 'like', "%{$search}%")
+                        ->orWhere('position_title', 'like', "%{$search}%");
+                });
+            })
             ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
             ->when($filters['priority'] ?? null, fn ($query, $priority) => $query->where('priority', $priority))
             ->latest('applied_at')
@@ -36,6 +43,7 @@ class JobApplicationController extends Controller
         $jobApplications = auth()->user()
             ->jobApplications()
             ->onlyTrashed()
+            ->withCount('interviews')
             ->latest('deleted_at')
             ->paginate(10);
 
@@ -49,6 +57,11 @@ class JobApplicationController extends Controller
         $this->authorize('create', JobApplication::class);
 
         return view('job-applications.create', [
+            'jobApplication' => new JobApplication([
+                'status' => 'draft',
+                'priority' => 'medium',
+                'applied_at' => now(),
+            ]),
             'statuses' => JobApplication::STATUSES,
             'priorities' => JobApplication::PRIORITIES,
         ]);
@@ -62,7 +75,7 @@ class JobApplicationController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Candidature creee avec succes.');
+            ->with('success', 'Candidature créée avec succès.');
     }
 
     public function show(JobApplication $jobApplication): View
@@ -96,7 +109,7 @@ class JobApplicationController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Candidature mise a jour avec succes.');
+            ->with('success', 'Candidature mise à jour avec succès.');
     }
 
     public function destroy(JobApplication $jobApplication): RedirectResponse
@@ -107,7 +120,7 @@ class JobApplicationController extends Controller
 
         return redirect()
             ->route('job-applications.index')
-            ->with('success', 'Candidature archivee avec succes.');
+            ->with('success', 'Candidature archivée avec succès.');
     }
 
     public function restore(JobApplication $jobApplication): RedirectResponse
@@ -118,6 +131,6 @@ class JobApplicationController extends Controller
 
         return redirect()
             ->route('job-applications.archives')
-            ->with('success', 'Candidature restauree avec succes.');
+            ->with('success', 'Candidature restaurée avec succès.');
     }
 }

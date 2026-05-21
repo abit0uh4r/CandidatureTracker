@@ -1,24 +1,24 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Modifier la candidature
-            </h2>
-        </div>
-    </x-slot>
+    <x-page-header
+        title="Modifier la candidature"
+        subtitle="Mettez à jour les informations de suivi pour ce dossier."
+    >
+        <x-slot name="actions">
+            <a href="{{ route('job-applications.show', $jobApplication) }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+                Retour au détail
+            </a>
+        </x-slot>
+    </x-page-header>
 
-    <div class="py-8">
-        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <div class="bg-white p-6 shadow-sm sm:rounded-lg">
-                <form method="POST" action="{{ route('job-applications.update', $jobApplication) }}">
-                    @csrf
-                    @method('PUT')
+    <x-ui.card class="max-w-5xl">
+        <form method="POST" action="{{ route('job-applications.update', $jobApplication) }}">
+            @csrf
+            @method('PUT')
 
-                    @include('job-applications._form', [
-                        'submitLabel' => 'Enregistrer',
-                    ])
-                </form>
-            </div>
-        </div>
-    </div>
+            @include('job-applications._form', [
+                'submitLabel' => 'Mettre à jour',
+                'cancelUrl' => route('job-applications.show', $jobApplication),
+            ])
+        </form>
+    </x-ui.card>
 </x-app-layout>

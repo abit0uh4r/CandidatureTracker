@@ -26,7 +26,7 @@ class InterviewController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Entretien ajoute avec succes.');
+            ->with('success', 'Entretien ajouté avec succès.');
     }
 
     public function edit(JobApplication $jobApplication, Interview $interview): View
@@ -48,7 +48,7 @@ class InterviewController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Entretien mis a jour avec succes.');
+            ->with('success', 'Entretien mis à jour avec succès.');
     }
 
     public function destroy(JobApplication $jobApplication, Interview $interview): RedirectResponse
@@ -60,7 +60,7 @@ class InterviewController extends Controller
 
         return redirect()
             ->route('job-applications.show', $jobApplication)
-            ->with('success', 'Entretien supprime avec succes.');
+            ->with('success', 'Entretien supprimé avec succès.');
     }
 
     private function ensureInterviewBelongsToJobApplication(JobApplication $jobApplication, Interview $interview): void
