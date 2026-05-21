@@ -52,6 +52,11 @@ class JobApplication extends Model
         return $this->hasMany(Interview::class);
     }
 
+    public function documents(): HasMany
+    {
+        return $this->hasMany(ApplicationDocument::class);
+    }
+
     public function statusLabel(): string
     {
         return self::STATUSES[$this->status] ?? $this->status;
