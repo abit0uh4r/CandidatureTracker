@@ -67,6 +67,15 @@ class JobApplication extends Model
         return self::PRIORITIES[$this->priority] ?? $this->priority;
     }
 
+    protected static function booted(): void
+    {
+        static::forceDeleting(function (JobApplication $jobApplication): void {
+            $jobApplication->documents()
+                ->get()
+                ->each(fn (ApplicationDocument $document) => $document->deleteStoredFile());
+        });
+    }
+
     /**
      * Get the attributes that should be cast.
      *

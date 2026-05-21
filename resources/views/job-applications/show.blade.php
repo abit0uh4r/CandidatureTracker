@@ -134,6 +134,56 @@
                         <p class="mt-1 text-sm font-medium text-gray-900">{{ $jobApplication->interviews->count() }}</p>
                     </div>
                 </div>
+
+                <div class="mt-6 border-t border-gray-100 pt-6">
+                    <h3 class="text-base font-semibold text-gray-900">Documents</h3>
+
+                    <form method="POST" action="{{ route('job-applications.documents.store', $jobApplication) }}" enctype="multipart/form-data" class="mt-4 space-y-3">
+                        @csrf
+
+                        <div>
+                            <x-input-label for="document" value="Ajouter un fichier" />
+                            <input
+                                id="document"
+                                name="document"
+                                type="file"
+                                class="mt-1 block w-full text-sm text-gray-700 file:mr-3 file:rounded-md file:border-0 file:bg-gray-900 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-700"
+                                required
+                            />
+                            <x-input-error class="mt-2" :messages="$errors->get('document')" />
+                        </div>
+
+                        <x-primary-button>
+                            Ajouter
+                        </x-primary-button>
+                    </form>
+
+                    <div class="mt-5 divide-y divide-gray-100">
+                        @forelse ($jobApplication->documents as $document)
+                            <div class="py-4">
+                                <p class="break-words text-sm font-semibold text-gray-900">{{ $document->original_name }}</p>
+                                <p class="mt-1 text-xs text-gray-500">{{ number_format($document->size / 1024, 1, ',', ' ') }} Ko</p>
+
+                                <div class="mt-3 flex gap-3 text-sm font-medium">
+                                    <a href="{{ route('job-applications.documents.download', [$jobApplication, $document]) }}" class="text-indigo-700 hover:text-indigo-900">
+                                        Telecharger
+                                    </a>
+
+                                    <form method="POST" action="{{ route('job-applications.documents.destroy', [$jobApplication, $document]) }}">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="text-gray-600 hover:text-gray-900">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="py-4 text-sm text-gray-500">Aucun document ajoute.</p>
+                        @endforelse
+                    </div>
+                </div>
             </aside>
         </div>
     </div>

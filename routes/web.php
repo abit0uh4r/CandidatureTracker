@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationDocumentController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\ProfileController;
@@ -21,6 +22,12 @@ Route::middleware('auth')->group(function () {
         ->name('job-applications.restore');
 
     Route::resource('job-applications', JobApplicationController::class);
+    Route::post('job-applications/{job_application}/documents', [ApplicationDocumentController::class, 'store'])
+        ->name('job-applications.documents.store');
+    Route::get('job-applications/{job_application}/documents/{document}/download', [ApplicationDocumentController::class, 'download'])
+        ->name('job-applications.documents.download');
+    Route::delete('job-applications/{job_application}/documents/{document}', [ApplicationDocumentController::class, 'destroy'])
+        ->name('job-applications.documents.destroy');
     Route::resource('job-applications.interviews', InterviewController::class)
         ->except(['index', 'show']);
 
