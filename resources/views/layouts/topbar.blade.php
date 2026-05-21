@@ -32,6 +32,19 @@
                 Nouvelle candidature
             </a>
 
+            <button
+                type="button"
+                class="relative grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-[#0b2d5f] shadow-sm transition hover:bg-slate-50"
+                aria-label="Notifications"
+                title="Notifications"
+            >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M15.5 17.5h-7A2.5 2.5 0 0 1 6 15V11a6 6 0 0 1 12 0v4a2.5 2.5 0 0 1-2.5 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M10 20a2.2 2.2 0 0 0 4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <span class="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+            </button>
+
             <div class="flex items-center gap-2.5 rounded-full border border-slate-200 bg-white py-1 pl-1.5 pr-3 shadow-sm">
                 <div class="grid h-8 w-8 place-items-center rounded-full bg-slate-100 text-xs font-bold text-[#0b2d5f]">
                     {{ $initials }}
