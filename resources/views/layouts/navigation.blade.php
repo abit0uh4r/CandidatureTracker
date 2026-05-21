@@ -16,8 +16,12 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('job-applications.index')" :active="request()->routeIs('job-applications.*')">
+                    <x-nav-link :href="route('job-applications.index')" :active="request()->routeIs('job-applications.index', 'job-applications.create', 'job-applications.show', 'job-applications.edit')">
                         Candidatures
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('job-applications.archives')" :active="request()->routeIs('job-applications.archives')">
+                        Archives
                     </x-nav-link>
                 </div>
             </div>
@@ -75,8 +79,12 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('job-applications.index')" :active="request()->routeIs('job-applications.*')">
+            <x-responsive-nav-link :href="route('job-applications.index')" :active="request()->routeIs('job-applications.index', 'job-applications.create', 'job-applications.show', 'job-applications.edit')">
                 Candidatures
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('job-applications.archives')" :active="request()->routeIs('job-applications.archives')">
+                Archives
             </x-responsive-nav-link>
         </div>
 

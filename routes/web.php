@@ -13,6 +13,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('job-applications/archives', [JobApplicationController::class, 'archives'])
+        ->name('job-applications.archives');
+    Route::patch('job-applications/{job_application}/restore', [JobApplicationController::class, 'restore'])
+        ->withTrashed()
+        ->name('job-applications.restore');
+
     Route::resource('job-applications', JobApplicationController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
