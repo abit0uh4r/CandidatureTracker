@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Présentation CandidatureTracker</title>
+    <style>
+        :root {
+            --navy: #071c3f;
+            --blue: #0b2d5f;
+            --ice: #eef4ff;
+            --text: #172033;
+            --muted: #64748b;
+            --line: #dbe3ef;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #e8edf5;
+            color: var(--text);
+            font-family: Calibri, Arial, sans-serif;
+        }
+
+        .deck {
+            display: grid;
+            gap: 28px;
+            padding: 28px;
+        }
+
+        .slide {
+            position: relative;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            margin: 0 auto;
+            padding: 58px 72px;
+            background: var(--white);
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, .16);
+            page-break-after: always;
+        }
+
+        .slide.dark {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .center {
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            color: inherit;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .logo {
+            display: grid;
+            width: 58px;
+            height: 58px;
+            place-items: center;
+            border-radius: 16px;
+            background: var(--white);
+            color: var(--blue);
+            font-size: 34px;
+            font-weight: 900;
+            box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .12);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 46px;
+            line-height: 1.1;
+            color: inherit;
+        }
+
+        h2 {
+            margin: 0 0 34px;
+            font-size: 40px;
+            line-height: 1.1;
+            color: var(--navy);
+        }
+
+        .dark h2 {
+            color: var(--white);
+        }
+
+        p {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.35;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .dark .muted {
+            color: #c7d2e6;
+        }
+
+        .list {
+            display: grid;
+            gap: 18px;
+            max-width: 860px;
+            font-size: 26px;
+            line-height: 1.25;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 470px;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            min-height: 150px;
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #f8fafc;
+        }
+
+        .card strong {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--navy);
+            font-size: 24px;
+        }
+
+        .card span {
+            color: var(--muted);
+            font-size: 20px;
+            line-height: 1.3;
+        }
+
+        .placeholder {
+            display: grid;
+            min-height: 360px;
+            place-items: center;
+            padding: 30px;
+            border: 2px dashed #b8c6dc;
+            border-radius: 24px;
+            background: var(--ice);
+            color: var(--blue);
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .footer {
+            position: absolute;
+            right: 72px;
+            bottom: 38px;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .dark .footer {
+            color: #c7d2e6;
+        }
+
+        .tag {
+            display: inline-flex;
+            width: max-content;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: var(--ice);
+            color: var(--blue);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .deck {
+                gap: 0;
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="deck">
+        <section class="slide dark center">
+            <div>
+                <div class="brand">
+                    <span class="logo">C</span>
+                    <span>CandidatureTracker</span>
+                </div>
+                <h1 style="margin-top: 76px;">[Ton nom complet]</h1>
+                <p class="muted" style="margin-top: 20px;">[Nom du formateur]</p>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Sommaire</h2>
+            <div class="cards">
+                <div class="card"><strong>01</strong><span>Problématique</span></div>
+                <div class="card"><strong>02</strong><span>Solution</span></div>
+                <div class="card"><strong>03</strong><span>Conception</span></div>
+                <div class="card"><strong>04</strong><span>Architecture & Méthodologie</span></div>
+                <div class="card"><strong>05</strong><span>Démonstration</span></div>
+                <div class="card"><strong>06</strong><span>Conclusion</span></div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Problématique</h2>
+            <div class="row">
+                <div class="list">
+                    <p>Un jeune diplômé multiplie les candidatures sur plusieurs canaux.</p>
+                    <p>Les notes simples deviennent vite difficiles à suivre.</p>
+                    <p>Résultat : relances oubliées, entretiens confondus, informations perdues.</p>
+                    <p>Il faut une vue claire, fiable et sécurisée de chaque opportunité.</p>
+                </div>
+                <div class="placeholder">Suivi dispersé<br>notes · emails · plateformes</div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Solution</h2>
+            <div class="row">
+                <div class="list">
+                    <p><strong>CandidatureTracker</strong> centralise le suivi personnel de recherche d'emploi.</p>
+                    <p>Créer une candidature.</p>
+                    <p>Ajouter des entretiens et documents.</p>
+                    <p>Archiver, restaurer et filtrer.</p>
+                </div>
+                <div class="placeholder">Insérer assets/dashboard.png</div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Modèle Conceptuel des Données — Méthode Merise</h2>
+            <div class="placeholder">Insérer assets/mcd.png<br>exporté depuis draw.io ou Lucidchart</div>
+        </section>
+
+        <section class="slide">
+            <h2>Modèle Logique des Données — Méthode Merise</h2>
+            <div class="placeholder">Insérer assets/mld.png<br>exporté depuis dbdiagram.io ou draw.io</div>
+        </section>
+
+        <section class="slide">
+            <h2>Architecture & Stack technique</h2>
+            <div class="cards">
+                <div class="card"><strong>Stack</strong><span>Laravel 13 · PHP 8.3 · Breeze · Blade · MySQL · Debugbar</span></div>
+                <div class="card"><strong>MVC</strong><span>Models pour les données, Views pour l'interface, Controllers pour les actions</span></div>
+                <div class="card"><strong>Outils</strong><span>GitHub par branches · Jira Kanban · tickets liés aux commits</span></div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Méthodologie Agile</h2>
+            <div class="row">
+                <div class="list">
+                    <p>Cadre utilisé : <strong>Kanban</strong></p>
+                    <p>User Stories transformées en tickets Jira.</p>
+                    <p>Développement par feature et commits liés.</p>
+                    <p>Suivi visuel : To Do · In Progress · Done.</p>
+                </div>
+                <div class="placeholder">Insérer assets/jira-board.png</div>
+            </div>
+        </section>
+
+        <section class="slide dark center">
+            <h1>Démonstration</h1>
+        </section>
+
+        <section class="slide">
+            <h2>Conclusion</h2>
+            <div class="list">
+                <p>Difficultés : N+1, sécurité par utilisateur, archivage sans suppression.</p>
+                <p>Solutions : eager loading, Policies, Soft Deletes.</p>
+                <p>Apports : MVC, Form Requests, Merise, Kanban, tests Pest.</p>
+                <p>Suite : rappels de relance, calendrier, export CSV.</p>
+            </div>
+            <div class="footer">GitHub : abit0uh4r/CandidatureTracker</div>
+        </section>
+    </main>
+</body>
+</html>
+

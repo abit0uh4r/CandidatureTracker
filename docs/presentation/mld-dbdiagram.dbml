@@ -1,0 +1,46 @@
+Table users {
+  id bigint [pk, increment]
+  name varchar(255)
+  email varchar(255) [unique]
+  password varchar(255)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table job_applications {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  company_name varchar(255)
+  position_title varchar(255)
+  offer_url varchar(255) [null]
+  status varchar(50)
+  priority varchar(50)
+  notes text [null]
+  applied_at date
+  deleted_at timestamp [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table interviews {
+  id bigint [pk, increment]
+  job_application_id bigint [not null, ref: > job_applications.id]
+  type varchar(255)
+  scheduled_at datetime
+  preparation_notes text [null]
+  result text [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table application_documents {
+  id bigint [pk, increment]
+  job_application_id bigint [not null, ref: > job_applications.id]
+  original_name varchar(255)
+  file_path varchar(255)
+  mime_type varchar(255)
+  size bigint
+  created_at timestamp
+  updated_at timestamp
+}
+
